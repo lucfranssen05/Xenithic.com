@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Xenithic</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="picture-1">
+    <img src="pexels-josh-sorenson-1714208.jpg"/>
+    <div class="text-1">
+        <br><br><br><br><br><br>
+        <h1>Cart</h1>
+    </div>
+</div>
+
+<nav>
+    <div class="nav-left">
+        <a href="index.html">Home</a>
+        <a href="games.html">Games</a>
+        <a href="Contact-Us.html">Contact us</a>
+    </div>
+    <div class="nav-right">
+        <a href="cart.html" class="cart-link">View Cart</a>
+    </div>
+</nav>
+
+<div class="cart-container">
+    <h1>Shopping Cart</h1>
+    <ul id="cart-items" class="cart-items"></ul>
+</div>
+
+
+
+<footer class="footer">
+    <div class="footer-content">
+        <p>&copy; 2024 Xenithic. All rights reserved.</p>
+        <ul class="footer-links">
+            <li><a href="Contact-Us.html">Contact Us</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Use</a></li>
+        </ul>
+    </div>
+
+<script>
+    function displayCartItems() {
+        let cartItems = JSON.parse(localStorage.getItem('cartItems'));
+        const cartItemsElement = document.getElementById('cart-items');
+
+        cartItemsElement.innerHTML = '';
+
+        if (cartItems && cartItems.length > 0) {
+            cartItems.forEach((item, index) => {
+                const li = document.createElement('li');
+
+                const img = document.createElement('img');
+                img.src = item.imageSrc;
+                img.alt = item.name;
+                img.classList.add('cart-item-image');
+                li.appendChild(img);
+
+                const nameAndPrice = document.createElement('span');
+                nameAndPrice.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                li.appendChild(nameAndPrice);
+
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove';
+                removeButton.classList.add('remove-from-cart');
+                removeButton.addEventListener('click', () => removeFromCart(index));
+                li.appendChild(removeButton);
+
+                cartItemsElement.appendChild(li);
+            });
+        } else {
+            cartItemsElement.textContent = 'Your cart is empty.';
+        }
+    }
+    function removeFromCart(index) {
+        let cartItems = JSON.parse(localStorage.getItem('cartItems'));
+        cartItems.splice(index, 1);
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        displayCartItems();
+    }
+
+    window.onload = displayCartItems;
+</script>
+
+</body>
+</html>

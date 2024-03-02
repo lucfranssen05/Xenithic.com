@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<script>
+  async function fetchEngines() {
+    const apiUrl = 'https://api.openai.com/v1/engines';
+    const apiKey = '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'; // Vervang dit met jouw OpenAI API-sleutel
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const responseData = await response.json();
+      console.log(responseData); // Toon beschikbare modellen
+
+    } catch (error) {
+      console.error('Er is een fout opgetreden:', error);
+    }
+  }
+
+  // Roep de functie aan om beschikbare modellen op te halen
+  fetchEngines();
+</script>
+
+</body>
+</html>
